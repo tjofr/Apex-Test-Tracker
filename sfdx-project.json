@@ -1,11 +1,22 @@
 {
-  "packageDirectories": [
-    {
-      "path": "force-app",
-      "default": true
+    "packageDirectories": [
+        {
+            "path": "force-app",
+            "default": true,
+            "package": "apextesttracker",
+            "versionName": "Version 1.0",
+            "versionNumber": "1.0.1.NEXT"
+        }
+    ],
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "52.0",
+    "packageAliases": {
+        "apextesttracker": "0Ho090000008OjxCAE",
+        "apextesttracker@1.0.0-1" : "04t09000000n8ATAAY",
+        "apextesttracker@1.0.0-2" : "04t09000000n8JDAAY",
+        "apextesttracker@1.0.0-3" : "04t09000000n8NfAAI",
+        "apextesttracker@1.0.0-4" : "04t09000000n8aXAAQ",
+        "apextesttracker@1.0.1-1" : "04t09000000n8acAAA"
     }
-  ],
-  "namespace": "",
-  "sfdcLoginUrl": "https://login.salesforce.com",
-  "sourceApiVersion": "44.0"
 }
