@@ -36,12 +36,14 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 	// (See Advanced Apex book for discussion)
 	public static Map<ID, ApexClass> getApexTestClasses(String namespace)
 	{
-		if(namespace=='default') namespace = null;
+		if(namespace=='default') {
+			namespace = null;
+		} 
 		Map<ID, ApexClass> results = new Map<ID, ApexClass>(
 			[Select ID, Name, NameSpacePrefix from ApexClass 
 			where Status='Active' 
 			And NameSpacePrefix = :namespace 
-			And Name Like '%test%' ]);
+			And (Name Like '%test%' OR Name Like '%TST') ]);
 		return results;
 	}
 	
@@ -59,7 +61,7 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		
 		// Reserve SOQL queries for test results - subtract the max result record count from limits, then divide by two as we call this function twice
 		Integer reserve = (Limits.getLimitQueryRows() - testClassIDs.size() * 10)/2;
-		if(reserve < 10000) reserve = 10000;	// But be sure to allow a generous minimum
+		if(reserve < 10000) { reserve = 10000;}	// But be sure to allow a generous minimum
 		
 		String queryTerm = 'Select ApexClassId, MethodName, Outcome, Message, TestTimestamp from ApexTestResult ' + whereTerm + ' Order By TestTimestamp Desc Limit :reserve';
 		
@@ -70,7 +72,7 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		if(Test.isRunningTest())
 		{
 			result= (getAfter)? mockNewerTestResults :mockOlderTestResults;
-			if(result==null) result = new List<ApexTestResult>();
+			if(result==null) {result = new List<ApexTestResult>();}
 		}
 		return result;
 	}
@@ -80,14 +82,16 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		// Are any currently running?
 		List<String> runningStatus = 
 			new List<String>{'Holiding','Queued','Preparing','Processing'};
-		List<ApexTestQueueItem> currentItems = [Select ApexClassId from ApexTestQueueItem where Status in :runningStatus ];
+		List<ApexTestQueueItem> currentItems = [Select ApexClassId from ApexTestQueueItem where Status in :runningStatus];
 
 		// Don't request run of any test current running or scheduled
 		for(ApexTestQueueItem runningItem: currentItems)
 		{
 			testClassIds.remove(runningItem.ApexClassId);
 		}
-		if(testClassIds.size()==0) return;	// Nothing left to run
+		if(testClassIds.size()==0) {
+			return;	// Nothing left to run
+		}
 
 		List<ApexTestQueueItem> queueItems = new List<ApexTestQueueItem>();
 		for (ID classId: testClassIds) 
@@ -95,7 +99,9 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 			queueItems.add(new ApexTestQueueItem(ApexClassId = classID));
 		}
 		// Can't schedule tests during a test
-		if(!Test.isRunningTest()) insert queueItems;
+		if(!Test.isRunningTest()) {
+			insert queueItems;
+		}
 	}
 	
 	
@@ -105,8 +111,10 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 	// 		ignoreTestDelay is currently only for internal integrations - is not exposed in the managed package
 	public static void performCI(String namespace, Boolean ignoreTestDelay)
 	{
-		if(namespace==null) namespace = 'default';
-		
+		if(namespace==null){
+			 namespace = 'default';
+		}
+
 		CI_Configuration__c config = CI_ConfigWrapper.loadConfig(namespace);
 		// If not yet configured, configure defaults
 		if(config==null)
@@ -130,10 +138,11 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		// this code would be run on two threads at once.
 		try
 		{
-			if(!Test.isRunningTest())
+			if(!Test.isRunningTest()){
 				config = [Select name, Last_Test_Request__c, Test_Delay__c,
 						Notification_EMail__c, Archive_Days__c 
-						from CI_Configuration__c where name=:namespace for update ];
+						from CI_Configuration__c where name=:namespace for update];
+			}
 		}
 		catch(Exception ex)
 		{
@@ -168,8 +177,12 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		for(ApexTestResult testResult: recentResults)
 		{
 			String key = testClasses.get(testResult.ApexClassID).Name + '.' + testResult.MethodName;
-			if(!latestRecentResults.containsKey(key)) latestRecentResults.put(key, testResult);
-			if(!latestClassResults.containsKey(testResult.ApexClassId)) latestClassResults.put(testResult.ApexClassId, testResult.TestTimestamp);
+			if(!latestRecentResults.containsKey(key)){
+				latestRecentResults.put(key, testResult);
+			}
+			if(!latestClassResults.containsKey(testResult.ApexClassId)){
+				latestClassResults.put(testResult.ApexClassId, testResult.TestTimestamp);
+			}
 		}				
 
 		// Now get the most recent results that are prior to the time of the last test run
@@ -177,8 +190,12 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		for(ApexTestResult testResult: oldResults)
 		{
 			String key = testClasses.get(testResult.ApexClassID).Name + '.' + testResult.MethodName;
-			if(!latestOldResults.containsKey(key)) latestOldResults.put(key, testResult);
-			if(!latestClassResults.containsKey(testResult.ApexClassId)) latestClassResults.put(testResult.ApexClassId, testResult.TestTimestamp);
+			if(!latestOldResults.containsKey(key)){
+				latestOldResults.put(key, testResult);
+			}
+			if(!latestClassResults.containsKey(testResult.ApexClassId)){
+			latestClassResults.put(testResult.ApexClassId, testResult.TestTimestamp);
+			}
 		}				
 
 		// Report results of tests that previously passed, but
@@ -189,13 +206,16 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		
 		if(!ignoreTestDelay)
 		{	// Remove recently run classes
-			if(config.Test_Delay__c==null || config.Test_Delay__c<=0) config.Test_Delay__c = 1;
+			if(config.Test_Delay__c==null || config.Test_Delay__c<=0){
+				config.Test_Delay__c = 1;
+			}
 			DateTime earliestToRun = 
 				DateTime.Now().addHours(-config.Test_Delay__c.intValue());
 			for(ID classId: latestClassResults.keyset())
 			{
-				if(latestClassResults.get(classId) >= earliestToRun)
+				if(latestClassResults.get(classId) >= earliestToRun){
 					runTestClassIds.Remove(classId);
+				}
 			}
 		}
 		
@@ -206,7 +226,9 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		Integer archiveDays = (config.Archive_Days__c==null || config.Archive_Days__c<1)? 1: config.Archive_Days__c.intValue(); 
 		DateTime oldestSummary = DateTime.Now().AddDays(-archiveDays);
 		List<CI_TestResult__c> recordsToDelete = [Select ID from CI_TestResult__c where ClassID__c = null And CreatedDate < :oldestSummary Limit 200];
-		if(recordsToDelete.size()>0) delete recordsToDelete;
+		if(recordsToDelete.size()>0){
+			delete recordsToDelete;
+		}
 		
 		config.Last_Test_Request__c = DateTime.Now();
 		CI_ConfigWrapper.saveConfig(config);
@@ -235,8 +257,9 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		// Build a map of the saved results keyed by the classname.methodname
 		for(CI_TestResult__c testResult: savedTestRecords)
 		{
-			if(!savedTestRecordMap.containsKey(testResult.Test_Name__c))
+			if(!savedTestRecordMap.containsKey(testResult.Test_Name__c)){
 				savedTestRecordMap.put(testResult.Test_Name__c, testResult);
+			}
 		}
 		
 		// Build a true list of test results prior to the last test date
@@ -276,7 +299,9 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 			else
 			{
 				// No prior result - record errors
-				if(!newResultRecord.Pass__c) newErrorList.add(newResultRecord);
+				if(!newResultRecord.Pass__c){
+					newErrorList.add(newResultRecord);
+				}
 			}
 			savedTestRecordMap.put(testName, newResultRecord);
 		}
@@ -296,11 +321,14 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		
 		for(CI_TestResult__c testResult: newErrorList)
 		{
-			if(!testResult.Pass__c)
+			if(!testResult.Pass__c){
 				errorMessage += testResult.Test_Name__c + ': ' + testResult.Message__c + '\n';
+			}
 		}
 		errorMessage = errorMessage.abbreviate(128000);
-		if(String.isBlank(errorMessage)) return;
+		if(String.isBlank(errorMessage)){
+			return;
+		}
 		CI_TestResult__c newSummary = 
 			new CI_TestResult__c(Message__c = errorMessage);
 		insert newSummary;
@@ -330,7 +358,9 @@ public without sharing class CI_Support implements CI_ScheduledDispatcher.ISched
 		}
 		// If there's no existing default config, create one.
 		
-		if(!allConfigs.containsKey('default')) performCI(null, false);	
+		if(!allConfigs.containsKey('default')){
+			performCI(null, false);	
+		}
 	}
 
 
