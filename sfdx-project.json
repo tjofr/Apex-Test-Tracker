@@ -10,7 +10,7 @@
     ],
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",
-    "sourceApiVersion": "52.0",
+    "sourceApiVersion": "54.0",
     "packageAliases": {
         "apextesttracker": "0Ho090000008OjxCAE",
         "apextesttracker@1.0.0-1" : "04t09000000n8ATAAY",

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>TestTracker_Notification_on_Default_NS</name>
+        <label>CI_TestResult__c.TestTracker_Notification_on_Default_NS</label>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <actionName>CI_TestResult__c.TestTracker_Notification_on_Default_NS</actionName>
+        <actionType>emailAlert</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>SObjectRowId</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>55.0</apiVersion>
+    <description>Migrated from the: Notify on error record workflow rule
+Workflow rule description: Notifies user when an error record is generated&quot;</description>
+    <label>Notify on error record</label>
+    <migratedFromWorkflowRuleName>Notify on error record</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>0</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>TestTracker_Notification_on_Default_NS</targetReference>
+        </connector>
+        <object>CI_TestResult__c</object>
+        <recordTriggerType>Create</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Draft</status>
+</Flow>
