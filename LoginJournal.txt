@@ -1,0 +1,155 @@
+C:\Travail\Apex-Test-Tracker>sfdx force:user:display
+=== User Description
+key           label
+────────────  ────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Username      test-61r8vxdrsdwx@example.com
+Profile Name  Administrateur système
+Id            0050E00000A66lXQAR
+Org Id        00D0E000000EzCFUA0
+Access Token  00D0E000000EzCF!ARIAQHSDsccDT1wEyxVA.kDRb26Q_CP4O3BnJLH1Lle8kQzsyLexfCw3a9Rn5n9z_4GSnXuZybhKfwsImqzlgZiURl5VMhFP
+Instance Url  https://data-data-7814-dev-ed.cs89.my.salesforce.com/
+Login Url     https://CS89.salesforce.com
+Alias         ApexTestTrackerSO1
+Password      (wEnj50B&%^8l
+
+=== User Description
+key           label
+────────────  ────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Username      test-fjztgd7ruwgu@example.com
+Profile Name  Administrateur système
+Id            0051j000007yLmuAAE
+Org Id        00D1j000000DvnrEAC
+Access Token  00D1j000000Dvnr!ARYAQELXuoXJyp6DoKh1NTzGG4GcJAa8IkkuQ7.tmUfjaOiGQkGllCpwWurp0XSk7cyHTXV5D2yedomVggyQB_RIYF72oTer
+Instance Url  https://saas-fun-507-dev-ed.cs102.my.salesforce.com/
+Login Url     https://CS102.salesforce.com
+Alias         ApexTestTrackerSO2
+Successfully set the password "OA^SlBre_2mop" for user test-fjztgd7ruwgu@example.com
+
+
+
+sfdx force:package:create -n apextesttracker -d "Apex Test Tracker" -r force-app -t Unlocked  
+
+sfdx force:user:permset:assign --permsetname ApexTestTracker
+
+sfdx force:package:version:create -p apextesttracker -d force-app -k test1234 
+
+sfdx force:package:version:create:report -i 08c090000008P4FAAU
+=== Package Version Create Request
+NAME                           VALUE
+─────────────────────────────  ─────────────────────────────────────────────────────────────────────────────────
+ID                             08c090000008P4FAAU
+Status                         Success
+Package Id                     0Ho090000008OjxCAE
+Package Version Id             05i090000008OqRAAU
+Subscriber Package Version Id  04t09000000n8ATAAY
+Tag
+Branch
+Created Date                   2021-10-01 18:17
+Installation URL               https://login.salesforce.com/packaging/installPackage.apexp?p0=04t09000000n8ATAAY
+
+C:\Travail\Apex-Test-Tracker>
+
+sfdx force:package:version:list -p apextesttracker
+C:\Travail\Apex-Test-Tracker>sfdx force:package:version:list -p apextesttracker
+=== Package Versions [1]
+Package Name     Namespace  Version Name  Version  Subscriber Package Version Id  Alias  Installation Key  Released  Validation Skipped 
+ Ancestor  Ancestor Version  Branch
+───────────────  ─────────  ────────────  ───────  ─────────────────────────────  ─────  ────────────────  ────────  ────────────────── 
+ ────────  ────────────────  ──────
+apextesttracker             Version 1.0   1.0.0.1  04t09000000n8ATAAY                    true              false     false
+ N/A       N/A
+
+sfdx force:package:install --package 04t... -u me@example.com
+
+sfdx force:package:install --package 04t09000000n8ATAAY -u me@example.com
+
+sfdx force:package:version:promote -p apextesttracker@1.0.0-1 -v PlanetMine
+
+C:\Travail\Apex-Test-Tracker>sfdx force:package:version:create:report -i 08c090000008P4PAAU
+=== Package Version Create Request
+NAME                           VALUE
+─────────────────────────────  ─────────────────────────────────────────────────────────────────────────────────
+ID                             08c090000008P4PAAU
+Status                         Success
+Package Id                     0Ho090000008OjxCAE
+Package Version Id             05i090000008OqWAAU
+Subscriber Package Version Id  04t09000000n8JDAAY
+Tag
+Branch
+Created Date                   2021-10-04 14:07
+Installation URL               https://login.salesforce.com/packaging/installPackage.apexp?p0=04t09000000n8JDAAY
+
+C:\Travail\Apex-Test-Tracker>
+
+sfdx force:package:version:create -p apextesttracker -d force-app -k test1234 -c
+
+sfdx force:package:version:create:report -i 08c090000008P4jAAE
+=== Package Version Create Request
+NAME                           VALUE
+─────────────────────────────  ─────────────────────────────────────────────────────────────────────────────────
+ID                             08c090000008P4jAAE
+Status                         Success
+Package Id                     0Ho090000008OjxCAE
+Package Version Id             05i090000008OqqAAE
+Subscriber Package Version Id  04t09000000n8NfAAI
+Tag
+Branch
+Created Date                   2021-10-04 16:01
+Installation URL               https://login.salesforce.com/packaging/installPackage.apexp?p0=04t09000000n8NfAAI
+
+sfdx force:package:installed:list 
+
+sfdx  force:auth:web:login -a PlanetPREPROD -r https://test.salesforce.com
+
+>sfdx force:package:uninstall -p apextesttracker@1.0.0-1 -u PlanetPREPROD
+PackageUninstallRequest is currently InProgress. You can continue to query the status using
+sfdx force:package:uninstall:report -i 06y9E000000000kQAA -u PlanetPREPROD
+
+
+sfdx force:package:install --package apextesttracker@1.0.1-1 -u PlanetPREPROD -k test1234
+
+sfdx force:package:install --package apextesttracker@1.0.1-1 -u PlanetPROD -k test1234   
+PackageInstallRequest is currently InProgress. You can continue to query the status using
+sfdx force:package:install:report -i 0Hf3X000000ZADISA4 -u thierry.jorand@planet.engie.com
+
+
+C:\Travail\Apex-Test-Tracker>sfdx force:user:password:generate 
+Successfully set the password "jjr@dpfa8bJka" for user test-fireweb1tszi@example.com.
+You can see the password again by running "sfdx force:user:display -u test-fireweb1tszi@example.com".
+
+C:\Travail\Apex-Test-Tracker>sfdx force:user:display -u test-fireweb1tszi@example.com
+WARNING: This command will expose sensitive information that allows for subsequent activity using your current authenticated session.
+Sharing this information is equivalent to logging someone in under the current credential, resulting in unintended access and escalation of privilege.
+For additional information, please review the authorization section of the https://developer.salesforce.com/docs/atlas.en-us.234.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_web_flow.htm
+
+=== User Description
+key           label
+────────────  ────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Username      test-fireweb1tszi@example.com
+Profile Name  Administrateur système
+Id            0053O000005kdtmQAA
+Org Id        00D3O00000050B0UAI
+Access Token  00D3O00000050B0!ARgAQE1s5mEWCJZLSdMBn_uktwhk0qpTViorZpmWPi1n3FXbbatH8ah3LRk7fkR_GJ8sACzftN8AFKH8Sl16RGeuZByD5pij
+Instance Url  https://saas-force-4856-dev-ed.my.salesforce.com
+Login Url     https://CS129.salesforce.com
+Alias         ApexTestTrackerSO3
+Password      jjr@dpfa8bJka
+
+C:\Travail\Apex-Test-Tracker>
+sfdx force:user:permset:assign --permsetname ApexTestTracker
+
+Don’t want to wait 24 hours until evaluating tests? You can run the application at any time by opening the developer console and using the Debug – Open Execute Anonymous Window, and entering the command
+
+
+
+CI_ScheduledDispatcher.executeNow(); => CI_ScheduledDispatcher.executeNow()
+
+and then clicking Execute.
+
+
+You must have setup and configuration permission in order for the tests to run.
+
+That’s all there is to it. Remember, that each time you application runs, it picks up the results of the previous set of test results. 
+It also sees the results of any tests you run manually using the Setup – Develop – Apex Test Execution window. If it sees a test that is failing for the first time, or failing after previously passing, the workflow will trigger and 
+anyone you’ve specified will be notified.
+

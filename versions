@@ -1,0 +1,8 @@
+=== Package Versions [5]
+Package Name     Namespace  Version Name  Version  Subscriber Package Version Id  Alias                    Installation Key  Released  Validation Skipped  Ancestor  Ancestor Version  Branch
+───────────────  ─────────  ────────────  ───────  ─────────────────────────────  ───────────────────────  ────────────────  ────────  ──────────────────  ────────  ────────────────  ──────
+apextesttracker             Version 1.0   1.0.0.1  04t09000000n8ATAAY             apextesttracker@1.0.0-1  true              false     false               N/A       N/A
+apextesttracker             Version 1.0   1.0.0.2  04t09000000n8JDAAY             apextesttracker@1.0.0-2  true              false     false               N/A       N/A
+apextesttracker             Version 1.0   1.0.0.3  04t09000000n8NfAAI             apextesttracker@1.0.0-3  true              true      false               N/A       N/A
+apextesttracker             Version 1.0   1.0.0.4  04t09000000n8aXAAQ             apextesttracker@1.0.0-4  true              false     false               N/A       N/A
+apextesttracker             Version 1.0   1.0.1.1  04t09000000n8acAAA             apextesttracker@1.0.1-1  true              true      false               N/A       N/A

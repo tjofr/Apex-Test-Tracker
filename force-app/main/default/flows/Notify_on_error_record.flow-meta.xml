@@ -3,8 +3,8 @@
     <actionCalls>
         <name>TestTracker_Notification_on_Default_NS</name>
         <label>CI_TestResult__c.TestTracker_Notification_on_Default_NS</label>
-        <locationX>0</locationX>
-        <locationY>0</locationY>
+        <locationX>176</locationX>
+        <locationY>335</locationY>
         <actionName>CI_TestResult__c.TestTracker_Notification_on_Default_NS</actionName>
         <actionType>emailAlert</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -15,11 +15,16 @@
             </value>
         </inputParameters>
     </actionCalls>
-    <apiVersion>55.0</apiVersion>
+    <apiVersion>54.0</apiVersion>
     <description>Migrated from the: Notify on error record workflow rule
 Workflow rule description: Notifies user when an error record is generated&quot;</description>
     <label>Notify on error record</label>
-    <migratedFromWorkflowRuleName>Notify on error record</migratedFromWorkflowRuleName>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
@@ -28,7 +33,7 @@ Workflow rule description: Notifies user when an error record is generated&quot;
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <start>
-        <locationX>0</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>TestTracker_Notification_on_Default_NS</targetReference>
@@ -37,5 +42,5 @@ Workflow rule description: Notifies user when an error record is generated&quot;
         <recordTriggerType>Create</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
 </Flow>

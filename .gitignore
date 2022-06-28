@@ -1,2 +1,7 @@
 .sfdx
 .vscode
+force-app/main/default/classes/Mine_TST.cls
+force-app/main/default/classes/Mine_TST.cls-meta.xml
+force-app/main/default/classes/Mine.cls
+force-app/main/default/classes/Mine.cls-meta.xml
+force-app/main/default/profiles/Admin.profile-meta.xml
